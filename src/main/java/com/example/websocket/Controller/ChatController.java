@@ -1,6 +1,8 @@
 package com.example.websocket.Controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,32 +26,15 @@ import com.example.websocket.Config.SocketTextHandler;
 
 @RestController
 @RequestMapping("/api")
-public class ChatController {
+public class ChatController extends TextWebSocketHandler{
 
     @Autowired
     private SocketTextHandler socketTextHandler;
 
+    private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
 
 
-    @PostMapping("/sendMessage")
-    public ResponseEntity<String> sendMessage(@RequestBody String message) {
-        System.out.println("API______________________________-");
-        System.out.println(message);
-        try {
-            // Send the message through the WebSocket connection
-            //WebSocketClient webSocketClient = new StandardWebSocketClient();
-           // WebSocketSession session = webSocketClient.doHandshake(new SocketTextHandler(), "ws://localhost:8088/user").get();
-            //String payload = "Hello, WebSocket!";
-            //TextMessage payload = new TextMessage(message);
-            // or
-            //TextMessage message = TextMessage.create(payload);
-            //socketTextHandler.handleTextMessage(session, payload);
 
-            System.out.println(message);
-            return ResponseEntity.ok("Message sent successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while sending the message.");
-        }
-    }
+
 }

@@ -34,7 +34,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
         System.out.println("Send Messages to all sessions....");
         for (WebSocketSession eachsession : sessions) {
             if (eachsession.isOpen()) {
-		        eachsession.sendMessage(new TextMessage("Hi " + jsonObject.get("user") + " NODEJS?"));
+		        eachsession.sendMessage(new TextMessage(jsonObject.get("user") + "\n"));
             } else{
                 System.out.println("not sending to all sessions");
             }

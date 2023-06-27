@@ -25,16 +25,35 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.example.websocket.Config.SocketTextHandler;
 
 @RestController
-@RequestMapping("/api")
-public class ChatController extends TextWebSocketHandler{
+public class ChatController {
+    private final SocketTextHandler webSocketHandler;
 
     @Autowired
-    private SocketTextHandler socketTextHandler;
+    public ChatController (SocketTextHandler  webSocketHandler) {
+        this.webSocketHandler = webSocketHandler;
+    }
 
-    private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+    @PostMapping("/messages")
+    public void sendMessageToWebSocket(@RequestBody String message)throws IOException {
+       System.out.println(webSocketHandler.getSessionIds());
+    	String payload = message;
+		JSONObject jsonObject = new JSONObject(payload);
+        System.out.println(payload);
+		//session.sendMessage(new TextMessage("Hi " + jsonObject.get("user") + " how may we help you?"));
+       for (WebSocketSession session : webSocketHandler.getSessionsFromIds(webSocketHandler.getSessionIds())) {
+            session.sendMessage(new TextMessage(message));
+        }
 
+        //
 
+        //System.out.println("Send Messages to all sessions....");
+        //for (WebSocketSession eachsession : webSocketHandler.getSessionIds()) {
+        //    if (eachsession.isOpen()) {
+		//        eachsession.sendMessage(new TextMessage(jsonObject.get("user") + "\n"));
+        //    } else{
+        //        System.out.println("not sending to all sessions");
+        //    }
+        //}
 
-
-
+    }
 }

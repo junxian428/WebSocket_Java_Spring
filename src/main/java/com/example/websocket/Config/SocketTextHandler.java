@@ -1,6 +1,7 @@
 package com.example.websocket.Config;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -16,8 +17,37 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Component
 public class SocketTextHandler extends TextWebSocketHandler {
 
-    private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+    private static List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
+    public List<WebSocketSession> getSessions() {
+        return sessions;
+    }
+
+    
+    public List<String> getSessionIds() {
+        List<String> sessionIds = new ArrayList<>();
+        for (WebSocketSession session : sessions) {
+            sessionIds.add(session.getId());
+        }
+        return sessionIds;
+    }
+    ///
+        public List<WebSocketSession> getSessionsFromIds(List<String> sessionIds) {
+        List<WebSocketSession> sessionList = new ArrayList<>();
+        for (String sessionId : sessionIds) {
+            for (WebSocketSession session : sessions) {
+                if (session.getId().equals(sessionId)) {
+                    sessionList.add(session);
+                    break;
+                }
+            }
+        }
+        return sessionList;
+    }
+
+
+
+    ///
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message)

@@ -10,7 +10,15 @@ socket.on('open', () => {
 
 socket.on('message', (message) => {
   console.log('Received message:', message);
+  console.log('Received message:' +  hexToString(message));
 });
+
+
+function hexToString(str)
+{
+    const buf = new Buffer(str, 'hex');
+    return buf.toString('utf8');
+}
 
 socket.on('close', () => {
   console.log('WebSocket connection closed');

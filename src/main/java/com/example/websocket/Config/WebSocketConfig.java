@@ -15,6 +15,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Configuration
@@ -28,7 +29,6 @@ public class WebSocketConfig implements WebSocketConfigurer,WebSocketMessageBrok
 
     
     }
-
 
 
 
